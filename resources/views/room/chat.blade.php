@@ -39,7 +39,7 @@
                                     <textarea id="content" class="form-control wait-send" rows="3"></textarea>
                                 </div>
                                 <button class="btn btn-primary pull-right"
-                                        role="button" id="send">发送
+                                        role="button" id="send">送出
                                 </button>
                                 <div class="clearfix"></div>
                             </div>
