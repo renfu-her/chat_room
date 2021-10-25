@@ -57,7 +57,6 @@ function join()
         } else {
             ajaxLoadingOpen();
             $.post("/room/" + id + "/join", {'_method': 'put', '_token': token}, function (res) {
-                return false;
                 if (res.status == true) {
                     location.href = res.redirect_uri;
                 } else {
