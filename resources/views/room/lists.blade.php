@@ -44,7 +44,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close closeBtn" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">請輸入密碼</h4>
                 </div>
@@ -58,7 +58,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-default closeBtn" data-dismiss="modal">關閉</button>
                     <button type="button" class="btn btn-primary" id="confirm" data-container="body"
                             data-toggle="popover" data-placement="bottom" data-content="密碼錯誤">加入
                     </button>

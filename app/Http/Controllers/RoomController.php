@@ -68,9 +68,9 @@ class RoomController extends Controller
     }
 
     /**
-     * 表单
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @Author: Roy
+     * @DateTime: 2021/10/24 下午 11:18
      */
     public function create()
     {
@@ -78,15 +78,17 @@ class RoomController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @Author: Roy
+     * @DateTime: 2021/10/24 下午 11:18
      */
     public function edit(Request $request)
     {
-//        判断是否存在
+        # 判断是否存在
         $roomEntity = $this->checkAndGet($request->id);
-//        判断是否有权限
+        # 判断是否有权限
         if ($roomEntity->user_id != $request->user()->id) {
             abort(403, '无权操作');
         }
@@ -102,9 +104,11 @@ class RoomController extends Controller
     }
 
     /**
-     * @param  StoreRoom  $request
+     * @param  \App\Http\Requests\StoreRoom  $request
      *
-     * @return mixed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @Author: Roy
+     * @DateTime: 2021/10/24 下午 11:18
      */
     public function store(StoreRoom $request)
     {
@@ -129,10 +133,12 @@ class RoomController extends Controller
     }
 
     /**
-     * @param  StoreRoom  $request
+     * @param  \App\Http\Requests\StoreRoom  $request
      * @param $id
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @Author: Roy
+     * @DateTime: 2021/10/24 下午 11:18
      */
     public function update(StoreRoom $request, $id)
     {
@@ -157,15 +163,18 @@ class RoomController extends Controller
     /**
      * @param $id
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @Author: Roy
+     * @DateTime: 2021/10/24 下午 11:18
      */
+
     public function chat($id)
     {
-//        判断房间是否存在
+        # 判斷房間是否存在
         $room = $this->checkAndGet($id);
-//        判断用户是否加入
+        # 判斷用戶是否加入
         if (Auth::user()->id != $room->user_id && !$this->model->checkUserJoined($id, $this->join)) {
-            abort(403, '请先加入房间');
+            abort(403, '請先加入房間');
         }
         $latestMessages = $this->message->getLatestMessage($id, config('room.message_page_size'));
         foreach ($latestMessages as $message) {
@@ -173,17 +182,19 @@ class RoomController extends Controller
             $message->user_image = sprintf("https://ui-avatars.com/api/?name=%s&color=7F9CF5&background=EBF4FF",
                 $message->user_name);
         }
-//        获取圈子成员
+        # 獲取圈子成員
         $memberNum = $this->join->memberNum($id);
 
         return view('room.chat', ['room' => $room, 'messages' => $latestMessages, 'memberNum' => $memberNum]);
     }
 
     /**
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param $id
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @Author: Roy
+     * @DateTime: 2021/10/25 上午 10:07
      */
     public function join(Request $request, $id)
     {
@@ -210,7 +221,7 @@ class RoomController extends Controller
      *
      * @return mixed
      * @Author: Roy
-     * @DateTime: 2021/10/20 下午 05:01
+     * @DateTime: 2021/10/24 下午 11:17
      */
     public function checkAndGet($id, $message = '')
     {
@@ -221,15 +232,6 @@ class RoomController extends Controller
             abort(404, $message ? $message : "This {$table} does not exist.");
         }
         return $info;
-    }
-
-    /**
-     * @Author: Roy
-     * @DateTime: 2021/10/22 下午 03:57
-     */
-    public function event()
-    {
-        event((new RoomMessageChannelEvent('test', 1)));
     }
 
     /**
@@ -253,7 +255,7 @@ class RoomController extends Controller
         }
         # 密碼
         if ($room->is_private && !Hash::check($request->cipher, $room->cipher)) {
-            return response()->json(['status' => false, 'message' => '密码不正确']);
+            return response()->json(['status' => false, 'message' => '密碼不正確']);
         }
 
         $this->join->create([

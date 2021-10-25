@@ -12,14 +12,12 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/fronts.css') }}">
-
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="{{ asset('js/app.js?v=20211023') }}"></script>
-    <script src="{{ asset('js/global.js?v=20211023') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
 </head>
 <body>
+<div class="loader" id="loading" style="display:none;">
+    <img src="{{asset('/assets/image/loader.gif')}}" alt="Loading..."/>
+</div>
 <div id="app">
     @if (session('message'))
         <div class="alert alert-success fade in" style="margin-bottom: 0">
@@ -99,6 +97,11 @@
             </div>
         </div>
     </nav>
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/app.js?v=20211023') }}"></script>
+    <script src="{{ asset('js/global.js?v=20211023') }}"></script>
     @yield('content')
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

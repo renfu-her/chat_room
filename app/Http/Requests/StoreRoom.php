@@ -36,12 +36,12 @@ class StoreRoom extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => '请输入房间标题',
-            'title.max' => '最大不可超过32个字符',
-            'isPrivate.required' => '请确定是否私密',
+            'title.required' => '請輸入房間標題',
+            'title.max' => '最大不可超過32個字符',
+            'isPrivate.required' => '請確定是否私密',
             'isPrivate.boolean' => '是否私密的格式不合法',
             'cover.image' => '文件格式不合法',
-            'cover.max' => '文件不能超过2M',
+            'cover.max' => '文件不能超過2M',
         ];
     }
 }
