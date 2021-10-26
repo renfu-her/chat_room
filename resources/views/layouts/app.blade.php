@@ -11,8 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/fronts.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fronts.css'.cofig('app.version')) }}">
+    <link rel="stylesheet" href="{{ asset('css/global.css'.cofig('app.version')) }}">
 </head>
 <body>
 <div class="loader" id="loading" style="display:none;">
@@ -100,10 +100,12 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="{{ asset('js/app.js?v=20211023') }}"></script>
-    <script src="{{ asset('js/global.js?v=20211023') }}"></script>
+    <script src="{{ asset('js/app.js?v='.cofig('app.version')) }}"></script>
+    <script src="{{ asset('js/global.js?'.cofig('app.version')) }}"></script>
     @yield('content')
 </div>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>

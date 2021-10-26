@@ -90,7 +90,7 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('js/rooms/form.js') }}"></script>
+<script src="{{ asset('js/rooms/form.js'.cofig('app.version')) }}"></script>
 @endsection
 
 <style>
