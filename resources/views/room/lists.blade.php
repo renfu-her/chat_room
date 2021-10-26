@@ -85,6 +85,6 @@
         </div>
     </div>
     </script>
-    <script src="{{asset('js/rooms/index.js'.config('app.version'))}}"></script>
+    <script src="{{asset('js/rooms/index.js?v='.config('app.version'))}}"></script>
 @endsection
 

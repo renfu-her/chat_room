@@ -11,8 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/fronts.css'.config('app.version')) }}">
-    <link rel="stylesheet" href="{{ asset('css/global.css'.config('app.version')) }}">
+    <link rel="stylesheet" href="{{ asset('css/fronts.css?v='.config('app.version')) }}">
+    <link rel="stylesheet" href="{{ asset('css/global.css?v='.config('app.version')) }}">
 </head>
 <body>
 <div class="loader" id="loading" style="display:none;">
@@ -101,7 +101,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/app.js?v='.config('app.version')) }}"></script>
-    <script src="{{ asset('js/global.js?'.config('app.version')) }}"></script>
+    <script src="{{ asset('js/global.js?v='.config('app.version')) }}"></script>
     @yield('content')
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"

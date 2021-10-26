@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <script src="{{asset('js/rooms/room.js'.config('app.version'))}}"></script>
+    <script src="{{asset('js/rooms/room.js?v='.config('app.version'))}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.min.js"></script>
     <script type="text/x-mustache" id="template">
     <div
