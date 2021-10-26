@@ -55,6 +55,6 @@ class RoomMessageChannelEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel(sprintf("chat.%s.message", $this->room_id));
+        return new PresenceChannel(sprintf("chat.%s", $this->room_id));
     }
 }

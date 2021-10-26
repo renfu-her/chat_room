@@ -23,15 +23,8 @@ $().ready(function () {
             contentClass.append('<span class="joined">' + user.name + ' 離開了房间</span>');
             setTimeout("changeHeight()", 10);
         })
-    // .listen('RoomMessageChannelEvent', (e) => {
-    //     //
-    //     console.log('listen');
-    //     console.log(e);
-    // })
-    ;
-    // 訊息
-    window.Echo.channel('chat.' + room_id + '.message')
         .listen('RoomMessageChannelEvent', (e) => {
+            // 訊息
             let template = $("#template").html();
             let html;
             html = Mustache.render(template, {
@@ -43,7 +36,8 @@ $().ready(function () {
             contentClass.append(html);
             //一开始就滚动到最下面
             setTimeout("changeHeight()", 10);
-        });
+        })
+    ;
 
     // 傳送訊息
     sendBtn.click(function () {
