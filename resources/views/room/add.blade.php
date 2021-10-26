@@ -89,5 +89,5 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/rooms/form.js'.cofig('app.version')) }}"></script>
+    <script src="{{ asset('js/rooms/form.js'.config('app.version')) }}"></script>
 @endsection
