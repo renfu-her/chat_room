@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/{id}/join', [RoomController::class, 'joinRoom'])->name('join.room');
         # Message
         Route::post('/{id}/message', [MessageController::class, 'store'])->name('message');
+        Route::post('/{id}/message/typing', [MessageController::class, 'typing'])->name('message.typing');
     });
 });
 

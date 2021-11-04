@@ -3,6 +3,7 @@ $().ready(function () {
     let onlineUsers = 0;
     let onlineClass = $('.online');
     let contentClass = $('.content');
+    let typingClass = $('.typing');
     let sendBtn = $("#send");
     let content = $("#content");
 
@@ -34,8 +35,20 @@ $().ready(function () {
                 direction: e.message.user.id == user_id ? 'right' : 'left',
             });
             contentClass.append(html);
-            //一开始就滚动到最下面
+            //滚动到最下面
             setTimeout("changeHeight()", 10);
+        })
+        .listen('RoomMessageTypingChannelEvent', (e) => {
+            let template = $("#typing_template").html();
+            let html;
+            if (e.message.type == 1) {
+                html = Mustache.render(template, {
+                    name: e.message.user.name,
+                    user_id: e.message.user.id,
+                });
+            }
+            typingClass.empty();
+            typingClass.append(html);
         })
     ;
 
@@ -68,4 +81,19 @@ function changeHeight() {
     if (beforeHeight != afterHeight) {
         setTimeout("changeHeight()", 5);
     }
+}
+
+//Blur
+function leftFocus() {
+    typing(status_focus);
+}
+
+//Focus
+function joinFocus() {
+    typing(status_blur);
+}
+
+function typing(type) {
+    $.post(typing_uri, {'type': type,}, function (res) {
+    });
 }

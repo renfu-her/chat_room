@@ -34,9 +34,13 @@
                                         <div class="clearfix"></div>
                                     @endforeach
                                 </div>
+                                {{--正在輸入--}}
+                                <div class="typing">
+                                </div>
                                 {{--底部--}}
                                 <div class="form-group">
-                                    <textarea id="content" class="form-control wait-send" rows="3"></textarea>
+                                    <textarea onblur="leftFocus();" onfocus="joinFocus();" id="content"
+                                              class="form-control wait-send" rows="3"></textarea>
                                 </div>
                                 <button class="btn btn-primary pull-right"
                                         role="button" id="send">送出
@@ -68,11 +72,16 @@
         </div>
     </div>
     <div class="clearfix"></div>
-
+    </script>
+    <script type="text/x-mustache" id="typing_template">
+        <span id="typing">@{{ name }}正在輸入...</span>
     </script>
     <script>
         let user_id = {{Auth::user()->id}};
         let room_id = {{$room->id}};
         let message_uri = '{{route('room.message',['id'=>$room->id])}}';
+        let typing_uri = '{{route('room.message.typing',['id'=>$room->id])}}';
+        let status_blur = {{\App\Constants\TypingStatus::TypingStatus_Blur}};
+        let status_focus = {{\App\Constants\TypingStatus::TypingStatus_Focus}};
     </script>
 @endsection

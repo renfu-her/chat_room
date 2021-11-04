@@ -8,6 +8,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\RoomMessageChannelEvent;
+use App\Events\RoomMessageTypingChannelEvent;
 
 class MessageController extends Controller
 {
@@ -63,7 +64,23 @@ class MessageController extends Controller
                 'content' => $request->get('content'),
             ]
         );
-        event((new RoomMessageChannelEvent(['user' => Auth::user(), 'content' => $request->get('content')], $id)));
+        broadcast((new RoomMessageChannelEvent(['user' => Auth::user(), 'content' => $request->get('content')], $id)));
+        return response()->json([
+            'status'  => true,
+            'message' => null,
+        ]);
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param $id
+     *
+     * @Author: Roy
+     * @DateTime: 2021/10/28 上午 10:27
+     */
+    public function typing(Request $request, $id)
+    {
+        broadcast((new RoomMessageTypingChannelEvent(['user' => Auth::user(), 'type' => $request->get('type')], $id)))->toOthers();
         return response()->json([
             'status'  => true,
             'message' => null,
