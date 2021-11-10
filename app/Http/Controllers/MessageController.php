@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\RoomMessageChannelEvent;
 use App\Events\RoomMessageTypingChannelEvent;
+use Carbon\Carbon;
 
 class MessageController extends Controller
 {
@@ -61,6 +62,7 @@ class MessageController extends Controller
             [
                 'user_id' => Auth::user()->id,
                 'room_id' => $id,
+                'date'    => Carbon::now()->toDateTime(),
                 'content' => $request->get('content'),
             ]
         );
@@ -80,7 +82,8 @@ class MessageController extends Controller
      */
     public function typing(Request $request, $id)
     {
-        broadcast((new RoomMessageTypingChannelEvent(['user' => Auth::user(), 'type' => $request->get('type')], $id)))->toOthers();
+        broadcast((new RoomMessageTypingChannelEvent(['user' => Auth::user(), 'type' => $request->get('type')],
+            $id)))->toOthers();
         return response()->json([
             'status'  => true,
             'message' => null,

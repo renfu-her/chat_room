@@ -13,6 +13,7 @@ use App\Events\RoomChannelEvent;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use App\Events\RoomMessageChannelEvent;
+use Carbon\Carbon;
 
 class RoomController extends Controller
 {
@@ -176,17 +177,21 @@ class RoomController extends Controller
         if (Auth::user()->id != $room->user_id && !$this->model->checkUserJoined($id, $this->join)) {
             abort(403, '請先加入房間');
         }
-        $latestMessages = $this->message->getLatestMessage($id, config('room.message_page_size'));
-        foreach ($latestMessages as $message) {
-            $message->content = nl2br($message->content);
-            $message->user_image = sprintf("https://ui-avatars.com/api/?name=%s&color=7F9CF5&background=EBF4FF",
-                $message->user_name);
-            $message->class = 'left';
-            if (Auth::user()->id == $message->user_id) {
-                $message->class = 'right';
-            }
-            $message->time = $message->created_at->format('H:i');
-        }
+        $latestMessages = $this->message->getLatestMessage($id, config('room.message_page_size'))->groupBy('date');
+
+        $latestMessages = $latestMessages->map(function ($messages,$dates) {
+            return $messages->map(function ($message) {
+                return (object) [
+                    'content'    => nl2br(Arr::get($message, 'content')),
+                    'user_name'  => Arr::get($message, 'user_name'),
+                    'user_image' => sprintf("https://ui-avatars.com/api/?name=%s&color=7F9CF5&background=EBF4FF",
+                        $message->user_name),
+                    'class'      => Auth::user()->id == $message->user_id ? 'right' : 'left',
+                    'time'       => $message->created_at->format('H:i'),
+                ];
+            });
+        });
+
         # 獲取圈子成員
         $memberNum = $this->join->memberNum($id);
 

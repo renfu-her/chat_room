@@ -17,7 +17,9 @@
                                     </span></h4>
                                 {{--内容--}}
                                 <div class="content">
-                                    @foreach($messages as $message)
+                                    @foreach($messages as $key => $dateMessages)
+                                        <span class="joined">{{\Illuminate\Support\Carbon::today()->toDateString() == $key ? 'Today':$key}}</span>
+                                        @foreach($dateMessages as $message)
                                         <div
                                             class="chat-{{$message->class}}">
                                             <img src="{{$message->user_image}}" alt="{{$message->user_name}}"
@@ -33,6 +35,7 @@
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
+                                        @endforeach
                                     @endforeach
                                 </div>
                                 {{--正在輸入--}}
