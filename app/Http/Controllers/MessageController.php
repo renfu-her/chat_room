@@ -62,7 +62,7 @@ class MessageController extends Controller
             [
                 'user_id' => Auth::user()->id,
                 'room_id' => $id,
-                'date'    => Carbon::now()->toDateTime(),
+                'date'    => Carbon::now()->toDateString(),
                 'content' => $request->get('content'),
             ]
         );
