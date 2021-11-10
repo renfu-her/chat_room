@@ -11,7 +11,7 @@
                         <div class="thumbnail">
 
                             <div class="caption">
-                                {{--头部--}}
+                                {{--頭部--}}
                                 <h4>{{$room->title}} <span class="pull-right number">(<span class="online"
                                         >0</span>/<span class="all">{{$memberNum}}</span>)
                                     </span></h4>
@@ -19,24 +19,24 @@
                                 <div class="content">
                                     @foreach($messages as $message)
                                         <div
-                                            class="{{Auth::user()->id == $message->user_id ? 'chat-right' : 'chat-left'}}">
+                                            class="chat-{{$message->class}}">
                                             <img src="{{$message->user_image}}" alt="{{$message->user_name}}"
-                                                 class="avatar pull-{{Auth::user()->id == $message->user_id ? 'right' : 'left'}}">
+                                                 class="avatar pull-{{$message->class}}">
                                             <div
-                                                class="{{Auth::user()->id == $message->user_id ? 'pull-right' : 'pull-left'}}">
-                                                <span
-                                                    class="username username-{{Auth::user()->id == $message->user_id ? 'right' : 'left'}}">{{$message->user_name}}</span>
+                                                class="pull-{{$message->class}}">
+                                                <span class="username username-{{$message->class}}">{{$message->user_name}}</span>
                                                 <br>
-                                                {{--防止换行符被转字符串--}}
-                                                <div class="content-span">{!!$message->content!!}</div>
+                                                <div>
+                                                    <span class="content-span">{!!$message->content!!}</span>
+                                                    <span class="timestamp-{{$message->class}}">{{$message->time}}</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
                                     @endforeach
                                 </div>
                                 {{--正在輸入--}}
-                                <div class="typing">
-                                </div>
+                                <div class="typing"></div>
                                 {{--底部--}}
                                 <div class="form-group">
                                     <textarea onblur="leftFocus();" onfocus="joinFocus();" id="content"
@@ -68,7 +68,8 @@
             <span
                 class="username username-@{{ direction }}">@{{ user_name }}</span>
             <br>
-            <div class="content-span">@{{ content }}</div>
+            <span class="content-span">@{{ content }}</span>
+            <span class="timestamp-@{{ direction }}">@{{ time }}</span>
         </div>
     </div>
     <div class="clearfix"></div>

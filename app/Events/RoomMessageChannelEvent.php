@@ -10,6 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
+use Carbon\Carbon;
 
 /**
  * Class RoomMessageChannelEvent
@@ -45,6 +46,7 @@ class RoomMessageChannelEvent implements ShouldBroadcast
                     Arr::get($message, 'user.name')),
             ],
             'content' => Arr::get($message, 'content'),
+            'time'    => Carbon::now()->format('H:i'),
         ];
     }
 

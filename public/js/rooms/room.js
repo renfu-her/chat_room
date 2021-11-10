@@ -32,6 +32,7 @@ $().ready(function () {
                 content: e.message.content,
                 user_image: e.message.user.image,
                 user_name: e.message.user.name,
+                time: e.message.time,
                 direction: e.message.user.id == user_id ? 'right' : 'left',
             });
             contentClass.append(html);
@@ -54,21 +55,22 @@ $().ready(function () {
 
     // 傳送訊息
     sendBtn.click(function () {
-        if (content.val() == '') {
-            alert('請填寫內容後再送出');
-            content.focus();
-            return false;
-        }
-        $.post(message_uri, {'_method': 'post', 'content': content.val()}, function (res) {
-            if (res.status == false) {
-                console.log(res);
-                alert('發生錯誤');
-            }
-            // 清空
-            content.val('');
-            return false;
-        });
+        send();
     });
+
+    //Enter
+    $(document).keydown(function (e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            if (e.shiftKey == 1) {
+                let currVal = $("#content").val();
+                $("#content").val(currVal += "\r\n");
+            } else {
+                send();
+            }
+        }
+    });
+
     //一开始就滚动到最下面
     setTimeout("changeHeight()", 500);
 });
@@ -95,5 +97,23 @@ function joinFocus() {
 
 function typing(type) {
     $.post(typing_uri, {'type': type,}, function (res) {
+    });
+}
+
+function send(){
+    content = $("#content");
+    if (content.val() == '') {
+        alert('請填寫內容後再送出');
+        content.focus();
+        return false;
+    }
+    $.post(message_uri, {'_method': 'post', 'content': content.val()}, function (res) {
+        if (res.status == false) {
+            console.log(res);
+            alert('發生錯誤');
+        }
+        // 清空
+        content.val('');
+        return false;
     });
 }

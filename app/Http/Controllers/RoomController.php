@@ -181,6 +181,11 @@ class RoomController extends Controller
             $message->content = nl2br($message->content);
             $message->user_image = sprintf("https://ui-avatars.com/api/?name=%s&color=7F9CF5&background=EBF4FF",
                 $message->user_name);
+            $message->class = 'left';
+            if (Auth::user()->id == $message->user_id) {
+                $message->class = 'right';
+            }
+            $message->time = $message->created_at->format('H:i');
         }
         # 獲取圈子成員
         $memberNum = $this->join->memberNum($id);

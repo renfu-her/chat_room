@@ -49,7 +49,15 @@
 
 .username-left {
     float: left;
-    margin-left: 3px;
+}
+
+.timestamp-right {
+    float: left;
+}
+
+.timestamp-left {
+    float: right;
+    margin-right: 3px;
 }
 
 .username-right {
@@ -58,7 +66,7 @@
 }
 
 .content-span {
-    padding: 2px 5px;
+    /*padding: 2px 5px;*/
     background: green;
     color: white;
     border-radius: 5px;
