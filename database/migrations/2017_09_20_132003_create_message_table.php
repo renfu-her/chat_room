@@ -15,7 +15,6 @@ class CreateMessageTable extends Migration
     {
         Schema::create('message', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('status')->unsigned()->default(0);
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('room_id')->unsigned()->nullable();
             $table->text('content')->nullable();

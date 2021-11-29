@@ -123,7 +123,7 @@ class MessageController extends Controller
     {
         $room = $this->checkAndGet($id);
         # 檢查房間狀態
-        if (is_null($room) == true || (Auth::user()->id != $room->user_id && !$this->model->checkUserJoined($id,
+        if (is_null($room) == true || (Auth::user()->id != $room->user_id && !$this->join->checkUserJoined($id,
                     $this->join))) {
             return false;
         }

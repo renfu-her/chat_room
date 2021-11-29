@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class RoomJoin extends Model
 {
@@ -37,5 +38,20 @@ class RoomJoin extends Model
             'room_id' => $room_id,
             'status' => 0
         ])->count();
+    }
+
+    /**
+     * @param $roomId
+     *
+     * @return mixed
+     * @Author: Roy
+     * @DateTime: 2021/11/29 下午 03:56
+     */
+    public function checkUserJoined($roomId)
+    {
+        return $this
+            ->where('user_id', Auth::user()->id)
+            ->where('room_id', $roomId)
+            ->exists();
     }
 }

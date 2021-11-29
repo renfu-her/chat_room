@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Created</div>
+                    <div class="panel-heading">Create</div>
 
                     <div class="panel-body">
                         <form class="form-horizontal" enctype="multipart/form-data" method="POST"
@@ -32,7 +32,7 @@
                                 <label for="cover" class="col-md-4 control-label">封面</label>
 
                                 <div class="col-md-6">
-                                    <input type="file" id="cover" name="cover" value="{{ old('cover') }}">
+                                    <input type="file" id="cover" name="cover" value="{{ old('cover') }}" accept="image/*">
 
                                     @if ($errors->has('cover'))
                                         <span class="help-block">
@@ -63,7 +63,7 @@
 
                             <div class="form-group hidden {{ $errors->has('cipher') ? ' has-error' : '' }}"
                                  id="cipherDiv">
-                                <label for="cipher" class="col-md-4 control-label">密码</label>
+                                <label for="cipher" class="col-md-4 control-label">密碼</label>
 
                                 <div class="col-md-6">
                                     <input id="cipher" type="password" class="form-control" name="cipher" autofocus>
@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Created
+                                        Create
                                     </button>
                                 </div>
                             </div>

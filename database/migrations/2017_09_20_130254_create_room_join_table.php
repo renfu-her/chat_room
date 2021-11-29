@@ -15,10 +15,10 @@ class CreateRoomJoinTable extends Migration
     {
         Schema::create('room_join', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('status')->unsigned()->default(0);
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('room_id')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

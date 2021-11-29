@@ -172,34 +172,30 @@ class RoomController extends Controller
     public function chat($id)
     {
         # 判斷房間是否存在
-        $room = $this->checkAndGet($id);
+        $room = $this->model->getRoomMessage($id);
         # 判斷用戶是否加入
-        if (Auth::user()->id != $room->user_id && !$this->model->checkUserJoined($id, $this->join)) {
-            abort(403, '請先加入房間');
+        if (is_null($room) === true) {
+            abort(404, '請返回列表重新加入房間');
         }
-        $latestMessages = $this->message->getLatestMessage($id)->groupBy('date');
-
+        $latestMessages = $room->message->groupBy('date');
         $latestMessages = $latestMessages->map(function ($messages, $dates) {
             return $messages->map(function ($message) {
                 return (object) [
                     'content'    => nl2br(Arr::get($message, 'content')),
                     'user_name'  => Arr::get($message, 'user_name'),
                     'user_image' => sprintf("https://ui-avatars.com/api/?name=%s&color=7F9CF5&background=EBF4FF",
-                        $message->user_name),
+                        $message->user->name),
                     'class'      => Auth::user()->id == $message->user_id ? 'right' : 'left',
                     'time'       => $message->created_at->format('H:i'),
                 ];
             });
         });
 
-        # 獲取圈子成員
-        $memberNum = $this->join->memberNum($id);
-
         return view('room.chat',
             [
                 'room'      => $room,
                 'messages'  => $latestMessages,
-                'memberNum' => $memberNum,
+                'memberNum' => $room->room_join->count(),
             ]
         );
     }
@@ -216,7 +212,7 @@ class RoomController extends Controller
     {
         $room = $this->checkAndGet($id);
         # 已加入
-        if ($this->model->checkUserJoined($id, $this->join) || Auth::user()->id == $room->user_id) {
+        if ($this->join->checkUserJoined($id, $this->join) || Auth::user()->id == $room->user_id) {
             return redirect(route('room.chat', ['id' => $id]));
         }
         # 密碼
@@ -241,11 +237,9 @@ class RoomController extends Controller
      */
     public function checkAndGet($id, $message = '')
     {
-        $table = $this->model->getTable();
-        $config = config("status.{$table}");
         $info = $this->model->find($id);
-        if (!$info || $info->status != $config['available']) {
-            abort(404, $message ? $message : "This {$table} does not exist.");
+        if (!$info) {
+            abort(404, $message ? $message : "This {$this->model->getTable()} does not exist.");
         }
         return $info;
     }
@@ -262,7 +256,7 @@ class RoomController extends Controller
     {
         $room = $this->checkAndGet($id);
         # 已加入
-        if ($this->model->checkUserJoined($id, $this->join) || Auth::user()->id == $room->user_id) {
+        if ($this->join->checkUserJoined($id, $this->join) || Auth::user()->id == $room->user_id) {
             return response()->json([
                 'status'       => true,
                 'message'      => 'have joined',
@@ -285,4 +279,5 @@ class RoomController extends Controller
             'redirect_uri' => route('room.chat', ['id' => $id]),
         ]);
     }
+
 }

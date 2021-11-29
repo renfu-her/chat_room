@@ -71,19 +71,11 @@
                                                      document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                           style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
-
-                                <li>
-                                    <a href="{{ route('room.index') }}">
-                                        My RoomList
-                                    </a>
-                                </li>
-
                                 <li>
                                     <a href="{{ url('room/create') }}">
                                         Create Room

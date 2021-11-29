@@ -5,14 +5,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Created</div>
+                <div class="panel-heading">Edit</div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{{route('room.update',['id'=>$room->id])}}">
                         {{ csrf_field() }}
                         @method('put')
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                            <label for="title" class="col-md-4 control-label">名称</label>
+                            <label for="title" class="col-md-4 control-label">名稱</label>
 
                             <div class="col-md-6">
                                 <input id="title" type="text" class="form-control" name="title" value="{{ old('title') ?? $room->title }}" required autofocus>
@@ -26,10 +26,10 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('cover') ? ' has-error' : '' }}">
-                            <label for="cover" class="col-md-4 control-label">空间封面</label>
+                            <label for="cover" class="col-md-4 control-label">封面</label>
 
                             <div class="col-md-6">
-                                <input type="file" id="cover" name="cover" value="{{ old('cover') }}">
+                                <input type="file" id="cover" name="cover" value="{{ old('cover') }}" accept="image/*">
 
                                 @if ($errors->has('cover'))
                                     <span class="help-block">
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="form-group {{$room->is_private == 1 ? 'show' : 'hidden'}} {{ $errors->has('cipher') ? ' has-error' : '' }}" id="cipherDiv">
-                            <label for="cipher" class="col-md-4 control-label">密码</label>
+                            <label for="cipher" class="col-md-4 control-label">密碼</label>
 
                             <div class="col-md-6">
                                 <input id="cipher" type="password" class="form-control" name="cipher" autofocus>

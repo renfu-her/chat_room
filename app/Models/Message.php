@@ -63,7 +63,8 @@ class Message extends Model
             ->select('message.content' , 'message.created_at' , 'users.id as user_id' , 'users.name as user_name','message.date')
             ->where('message.room_id' , '=' , $room_id)
             ->where('message.status' , '=' , config('status.message.available'))
-            ->get();
+            ->get()
+            ->groupBy('date');
     }
     /**
      * @param $room_id

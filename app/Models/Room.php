@@ -51,33 +51,28 @@ class Room extends Model
     }
 
     /**
-     * @return \App\Models\RoomJoin
-     * @Author: Roy
-     * @DateTime: 2021/10/23 下午 02:32
-     */
-    private function getEntity(): RoomJoin
-    {
-        if (app()->has(RoomJoin::class) === false) {
-            app()->singleton(RoomJoin::class);
-        }
-
-        return app(RoomJoin::class);
-    }
-
-    /**
-     * @param $roomId
-     * @param  \App\Models\RoomJoin  $join
+     * @param  int  $room_id
      *
      * @return mixed
      * @Author: Roy
-     * @DateTime: 2021/10/23 下午 02:31
+     * @DateTime: 2021/11/29 下午 03:58
      */
-    public function checkUserJoined($roomId, RoomJoin $join)
+    public function getRoomMessage(int $room_id)
     {
-        return $this->getEntity()
-            ->where('status', config('status.room_join.available'))
-            ->where('user_id', Auth::user()->id)
-            ->where('room_id', $roomId)
-            ->exists();
+        return $this
+            ->with([
+                'message'=>function($messageQuery){
+                    return $messageQuery->with('user');
+                },
+                'room_join',
+            ])
+            ->whereHas('room_join',function ($query) use($room_id){
+                return $query
+                    ->where('room_id',$room_id)
+                    ->where('user_id',Auth::id())
+                ;
+            })
+            ->find($room_id)
+        ;
     }
 }
