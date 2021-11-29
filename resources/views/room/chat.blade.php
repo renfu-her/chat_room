@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <link rel="stylesheet" href="{{asset('css/chat.css')}}">
+    <link rel="stylesheet" href="{{asset('css/chat.css')}}?v={{config('app.version')}}">
     <div class="container">
         <div class="row">
             @if($room->user_id == \Illuminate\Support\Facades\Auth::id())

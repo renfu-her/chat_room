@@ -181,7 +181,7 @@ class RoomController extends Controller
         $latestMessages = $latestMessages->map(function ($messages, $dates) {
             return $messages->map(function ($message) {
                 return (object) [
-                    'content'    => nl2br(Arr::get($message, 'content')),
+                    'content'    => (Arr::get($message, 'content')),
                     'user_name'  => Arr::get($message, 'user_name'),
                     'user_image' => sprintf("https://ui-avatars.com/api/?name=%s&color=7F9CF5&background=EBF4FF",
                         $message->user->name),

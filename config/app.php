@@ -27,7 +27,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
-
+    'version'=> env('APP_VERSION',date("YMDHis")),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -122,8 +122,6 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
-
-    'version' => env('APP_VERSION',date("Y-m-d")),
 
     /*
     |--------------------------------------------------------------------------

@@ -66,8 +66,8 @@
 }
 
 .content-span {
-    /*padding: 2px 5px;*/
-    background: green;
+    padding: 7px 7px;
+    background: #5B5B5B;
     color: white;
     border-radius: 5px;
     max-width: 250px;
