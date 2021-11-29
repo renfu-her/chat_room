@@ -21,6 +21,7 @@ class CreateRoomTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->boolean('is_private')->unsigned()->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
