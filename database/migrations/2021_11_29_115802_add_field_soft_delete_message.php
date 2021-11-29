@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditFieldDate extends Migration
+class AddFieldSoftDeleteMessage extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class EditFieldDate extends Migration
     {
         Schema::table('message', function (Blueprint $table) {
             //
-            $table->string('date', 16)->nullable()->comment('時間')->after('id');
+            $table->softDeletes();
         });
     }
 
@@ -28,7 +28,6 @@ class EditFieldDate extends Migration
     {
         Schema::table('message', function (Blueprint $table) {
             //
-            $table->dropColumn('date');
         });
     }
 }

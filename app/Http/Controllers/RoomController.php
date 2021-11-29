@@ -177,9 +177,9 @@ class RoomController extends Controller
         if (Auth::user()->id != $room->user_id && !$this->model->checkUserJoined($id, $this->join)) {
             abort(403, '請先加入房間');
         }
-        $latestMessages = $this->message->getLatestMessage($id, config('room.message_page_size'))->groupBy('date');
+        $latestMessages = $this->message->getLatestMessage($id)->groupBy('date');
 
-        $latestMessages = $latestMessages->map(function ($messages,$dates) {
+        $latestMessages = $latestMessages->map(function ($messages, $dates) {
             return $messages->map(function ($message) {
                 return (object) [
                     'content'    => nl2br(Arr::get($message, 'content')),
@@ -195,7 +195,13 @@ class RoomController extends Controller
         # 獲取圈子成員
         $memberNum = $this->join->memberNum($id);
 
-        return view('room.chat', ['room' => $room, 'messages' => $latestMessages, 'memberNum' => $memberNum]);
+        return view('room.chat',
+            [
+                'room'      => $room,
+                'messages'  => $latestMessages,
+                'memberNum' => $memberNum,
+            ]
+        );
     }
 
     /**

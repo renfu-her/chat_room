@@ -1,9 +1,11 @@
 @extends('layouts.app')
-
 @section('content')
     <link rel="stylesheet" href="{{asset('css/chat.css')}}">
     <div class="container">
         <div class="row">
+            @if($room->user_id == \Illuminate\Support\Facades\Auth::id())
+            <a class="btn btn-primary" id="clean">清除</a>
+            @endif
             <div class="col-md-8 col-md-offset-2">
                 <div class="row">
                     {{--room start--}}
@@ -87,5 +89,6 @@
         let typing_uri = '{{route('room.message.typing',['id'=>$room->id])}}';
         let status_blur = {{\App\Constants\TypingStatus::TypingStatus_Blur}};
         let status_focus = {{\App\Constants\TypingStatus::TypingStatus_Focus}};
+        let message_clean_uri = '{{route('room.message.clean',['id'=>$room->id])}}';
     </script>
 @endsection

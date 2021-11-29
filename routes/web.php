@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
         # Message
         Route::post('/{id}/message', [MessageController::class, 'store'])->name('message');
         Route::post('/{id}/message/typing', [MessageController::class, 'typing'])->name('message.typing');
+        Route::post('/{id}/message/clean', [MessageController::class, 'clean'])->name('message.clean');
     });
 });
 

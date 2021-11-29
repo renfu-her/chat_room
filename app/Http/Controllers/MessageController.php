@@ -91,6 +91,31 @@ class MessageController extends Controller
     }
 
     /**
+     * @param  \Illuminate\Http\Request  $request
+     * @param $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @Author: Roy
+     * @DateTime: 2021/11/29 下午 02:34
+     */
+    public function clean(Request $request, $id)
+    {
+        $room = $this->checkAndGet($id);
+        # 檢查房間狀態
+        if (is_null($room) == true || Auth::user()->id != $room->user_id ) {
+            return response()->json([
+                'status'  => true,
+                'message' => '房間不存在 || 非建立者',
+            ]);
+        }
+        # 刪除訊息
+        (new Message())->deleteMessage($id);
+        return response()->json([
+            'status'  => true,
+            'message' => null,
+        ]);
+    }
+    /**
      * @Author: Roy
      * @DateTime: 2021/10/23 下午 12:16
      */

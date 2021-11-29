@@ -71,6 +71,7 @@ $().ready(function () {
         }
     });
 
+    $("#clean").click(cleanFunc);
     //一开始就滚动到最下面
     setTimeout("changeHeight()", 500);
 });
@@ -116,4 +117,16 @@ function send(){
         content.val('');
         return false;
     });
+}
+const cleanFunc = function (){
+    if(confirm('請確認是否清除所有訊息') === true){
+        $.post(message_clean_uri, {'_method': 'post',}, function (res) {
+            if (res.status == false) {
+                console.log(res.message);
+                alert('發生錯誤');
+            }
+            location.reload();
+        });
+    }
+    return false;
 }

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
+    use SoftDeletes;
     /**
      * @var string
      */
@@ -30,6 +32,8 @@ class Message extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @Author: Roy
+     * @DateTime: 2021/11/29 下午 02:44
      */
     public function room()
     {
@@ -38,6 +42,8 @@ class Message extends Model
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @Author: Roy
+     * @DateTime: 2021/11/29 下午 02:44
      */
     public function user()
     {
@@ -45,21 +51,28 @@ class Message extends Model
     }
 
     /**
-     * 获取最近24小时内的消息
      * @param $room_id
-     * @param $pageSize
-     * @return \Illuminate\Support\Collection
+     *
+     * @return mixed
+     * @Author: Roy
+     * @DateTime: 2021/11/29 下午 02:44
      */
-    public function getLatestMessage($room_id, $pageSize)
+    public function getLatestMessage($room_id)
     {
-//        暂时先获取全部数据好了
-//        $time = time() - config('room.latest_time');
         return $this->leftJoin('users' , 'message.user_id' , '=' , 'users.id')
             ->select('message.content' , 'message.created_at' , 'users.id as user_id' , 'users.name as user_name','message.date')
             ->where('message.room_id' , '=' , $room_id)
             ->where('message.status' , '=' , config('status.message.available'))
-//            ->where('message.created_at' , '>' , $time)
-//            ->take($pageSize)
             ->get();
+    }
+    /**
+     * @param $room_id
+     *
+     * @Author: Roy
+     * @DateTime: 2021/11/29 下午 02:44
+     */
+    public function deleteMessage($room_id)
+    {
+        return $this->where('room_id',$room_id)->delete();
     }
 }
