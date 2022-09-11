@@ -14,8 +14,8 @@
                     @foreach($rooms as $room)
                         <div class="col-sm-6 col-md-4">
                             <div class="thumbnail">
-                                <a target="_blank" href="{{url("room/$room->id")}}">
-                                    <img
+                                <a href="#" target="_blank" >
+                                    <img class="room_img" data-id="{{$room->id}}"
                                         src="{{is_null($room->cover) ? asset(config('room.default_room_pic')) : asset($room->cover)}}"
                                         alt="{{$room->title}}">
                                 </a>
@@ -26,7 +26,7 @@
                                             <a href="{{url("room/$room->id/edit")}}" class="btn btn-primary"
                                                role="button">編輯</a>
                                         @endif
-                                        <a href="#" data-id="{{$room->id}}" data-private="{{$room->is_private}}" class="btn btn-primary join"
+                                        <a href="#" data-id="{{$room->id}}" data-private="{{$room->is_private}}" data-join="{{$room->actions->join_uri}}" class="btn btn-primary join room_{{$room->id}}"
                                            role="button">加入</a>
                                     </p>
                                 </div>

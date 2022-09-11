@@ -1,5 +1,6 @@
 let id;
 let token = $('meta[name="csrf-token"]').attr('content');
+let href;
 $().ready(function () {
     window.Echo.channel('RoomList')
         .listen('RoomChannelEvent', (e) => {
@@ -25,7 +26,7 @@ $().ready(function () {
     join();
     $('#confirm').click(function () {
         ajaxLoadingOpen();
-        $.post("/room/" + id + "/join", {
+        $.post(herf, {
             '_method': 'put',
             '_token': token,
             'cipher': $('#cipher').val()
@@ -39,24 +40,31 @@ $().ready(function () {
         });
         ajaxLoadingClose();
     });
+    $(".room_img").on('click', function () {
+        $('.room_' + $(this).data('id')).trigger('click');
+        return false;
+    });
     $('#joinModal').on('hidden.bs.modal', function (e) {
         $('#confirm').popover('hide');
+        return true;
     });
     $('.closeBtn').click(function () {
         $('#joinModal').modal('hide');
+        return true;
     });
 });
-function join()
-{
+
+function join() {
     $('.join').click(function () {
         $('#test').modal('show');
         id = $(this).data('id');
+        herf = $(this).data('join');
         if ($(this).data('private') == 1) {
             $("#recipient-name").val('');
             $('#joinModal').modal('show');
         } else {
             ajaxLoadingOpen();
-            $.post("/room/" + id + "/join", {'_method': 'put', '_token': token}, function (res) {
+            $.post(herf, {'_method': 'put', '_token': token}, function (res) {
                 if (res.status == true) {
                     location.href = res.redirect_uri;
                 } else {

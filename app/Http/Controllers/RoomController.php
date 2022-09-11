@@ -61,8 +61,13 @@ class RoomController extends Controller
                 'title'      => Arr::get($room, 'title'),
                 'cover'      => asset(Arr::get($room, 'cover', config('room.default_room_pic'))),
                 'user_id'    => Arr::get($room, 'user_id'),
-                'is_private' => Arr::get($room, 'is_private'),
+                'is_private' => Auth::id() == Arr::get($room, 'user_id') ? false : Arr::get($room, 'is_private'),
                 'cipher'     => Arr::get($room, 'cipher'),
+                'actions'    => (object) [
+                    'join_uri' => route('room.join.room', [
+                        'id' => $room->id,
+                    ]),
+                ],
             ];
         });
         return view('room.lists', ['rooms' => $rooms, 'paginate' => $paginate]);
