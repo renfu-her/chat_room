@@ -11,6 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Room;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class RoomChannelEvent
@@ -37,10 +38,15 @@ class RoomChannelEvent implements ShouldBroadcast
             return [
                 'id'         => Arr::get($RoomEntity, 'id'),
                 'title'      => Arr::get($RoomEntity, 'title'),
-                'cover'      => asset(Arr::get($RoomEntity, 'cover',config('room.default_room_pic'))),
+                'cover'      => asset(Arr::get($RoomEntity, 'cover', config('room.default_room_pic'))),
                 'user_id'    => Arr::get($RoomEntity, 'user_id'),
-                'is_private' => Arr::get($RoomEntity, 'is_private'),
+                'is_private' => Auth::id() == Arr::get($RoomEntity, 'user_id') ? false : Arr::get($RoomEntity, 'is_private'),
                 'cipher'     => Arr::get($RoomEntity, 'cipher'),
+                'actions'    => (object) [
+                    'join_uri' => route('room.join.room', [
+                        'id' => $RoomEntity->id,
+                    ]),
+                ],
             ];
         })->toArray();
     }

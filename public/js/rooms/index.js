@@ -13,7 +13,8 @@ $().ready(function () {
                     room_id: e.message[i].id,
                     title: e.message[i].title,
                     cover: e.message[i].cover,
-                    is_private: e.message[i].is_private
+                    is_private: e.message[i].is_private,
+                    join_uri: e.message[i].actions.join_uri,
                 });
             }
             room_list.empty();

@@ -71,14 +71,14 @@
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
             <a target="_blank" href="@{{ room_id }}">
-                <img src="@{{ cover }}"
+                <img class="room_img" data-id="@{{ room_id }}" src="@{{ cover }}"
                      alt="@{{ title }}">
             </a>
             <div class="caption">
                 <h4>@{{ title }}</h4>
                 <p>
-                    <button data-id="@{{ room_id }}" data-private="@{{ is_private }}"
-                            class="btn btn-primary join">加入
+                    <button data-id="@{{ room_id }}" data-private="@{{ is_private }}" data-join="@{{ join_uri }}"
+                            class="btn btn-primary join room_@{{ room_id }}">加入
                     </button>
                 </p>
             </div>
