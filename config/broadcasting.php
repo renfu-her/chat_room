@@ -37,11 +37,11 @@ return [
             'app_id'  => env('PUSHER_APP_ID'),
             'options' => config('app.env') == 'production'
                 ? [
-                    'cluster'   => env('PUSHER_APP_CLUSTER'),
-                    'host'      => '127.0.0.1',
-                    'encrypted' => false,
-                    'port'      => 6001,
-                    'scheme'    => 'http',
+                    'cluster' => env('PUSHER_APP_CLUSTER'),
+                    'host'    => '127.0.0.1',
+                    // 'encrypted' => false,
+                    'port'    => env('LARAVEL_WEBSOCKETS_PORT', 6006),
+                    // 'scheme' => 'http'
                 ]
                 : [
                     'cluster' => env('PUSHER_APP_CLUSTER'),
