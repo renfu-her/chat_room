@@ -6,60 +6,42 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+<p><strong>這裡範例是利用主機當socket</strong></p>
+<p><strong>不想設定主機參數可以使用<a href="https://pusher.com/" target="_blank" rel="noopener"> pusher </a></strong></p>
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p><strong>修改env&nbsp;</strong></p>
+<pre style="box-sizing: border-box; -webkit-font-smoothing: antialiased; background: #2f333d; font-family: Menlo, Monaco, monospace; line-height: 21px; margin-bottom: 1.5em; overflow: auto; padding: 12.3438px 15.4219px; border: 1px solid #292c33; border-radius: 4px; color: #d2d2d2; font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"># .env<br />BROADCAST_DRIVER=pusher
+PUSHER_APP_ID={PUSHER_APP_ID}
+PUSHER_APP_KEY={PUSHER_APP_KEY}
+PUSHER_APP_SECRET=</span></span></span></span>{PUSHER_APP_SECRET}</pre>
+<p><strong>修改bootstarp.js</strong></p>
+<pre style="box-sizing: border-box; -webkit-font-smoothing: antialiased; background: #2f333d; font-family: Menlo, Monaco, monospace; line-height: 21px; margin-bottom: 1.5em; overflow: auto; padding: 12.3438px 15.4219px; border: 1px solid #292c33; border-radius: 4px; color: #d2d2d2; font-size: 14px;"><span style="color: #99968b; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"># /resources/js/bootstarp.js
+import Echo from 'laravel-echo'
+window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    encrypted: false,
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    forceTLS: false,
+    disableStats: true
+});</span></span></pre>
+<p><strong>安裝套件</strong></p>
+<pre style="box-sizing: border-box; -webkit-font-smoothing: antialiased; background: #2f333d; font-family: Menlo, Monaco, monospace; line-height: 21px; margin-bottom: 1.5em; overflow: auto; padding: 12.3438px 15.4219px; border: 1px solid #292c33; border-radius: 4px; color: #d2d2d2; font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;">composer install
+php artisan migrate
+npm install
+npm run dev
+</span></span></span></span></span></span></span></span></pre>
+<p><strong>啟動websocket(預設port:6001)</strong></p>
+<pre style="box-sizing: border-box; -webkit-font-smoothing: antialiased; background: #2f333d; font-family: Menlo, Monaco, monospace; line-height: 21px; margin-bottom: 1.5em; overflow: auto; padding: 12.3438px 15.4219px; border: 1px solid #292c33; border-radius: 4px; color: #d2d2d2; font-size: 14px;"><span style="color: #d2d2d2; font-family: Menlo, Monaco, monospace;"><span style="font-size: 14px;"># 預設port:6001<br />php artisan websockets:serve<br />//</span></span>php artisan websockets:serve --port=6001</pre>
+<p><strong>範例畫面</strong></p>
+<p><a href="https://online.usongrat.tw/" title="demo" target="_blank" rel="noopener"><img src="https://roy.usongrat.tw/storage/images/2022/03/14/messageImage_1647235194338.jpg" alt="範例" width="1168" height="666" /></a></p>
+<p><b>github範本 :</b></p>
+<p><b>&nbsp;<a href="https://github.com/cc711612/chat_room" title="github" target="_blank" rel="noopener">https://github.com/cc711612/chat_room</a></b></p>
+<p><b>範本 :</b></p>
+<p><b>&nbsp;<a href="https://chat.usongrat.tw" title="範例" target="_blank" rel="noopener">https://chat.usongrat.tw</a></b></p>
+<p><strong>參考文獻:</strong></p>
+<p><b><a href="https://beyondco.de/docs/laravel-websockets/getting-started/introduction" title="參考文獻">https://beyondco.de/docs/laravel-websockets/getting-started/introduction</a><a href="https://beyondco.de/docs/laravel-websockets/getting-started/introduction" target="_blank" rel="noopener"></a></b></p>
+<p><a href="https://learnku.com/docs/laravel/8.x/broadcasting/9388#presence-channels" target="_blank" title="參考文獻" rel="noopener"><b>https://learnku.com/docs/laravel/8.x/broadcasting/9388#presence-channels</b></a></p>
