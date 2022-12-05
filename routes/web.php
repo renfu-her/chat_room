@@ -21,6 +21,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function (){
         return redirect(route('room.index'));
     });
+    Route::get('/test', function () {
+        return view('welcome');
+    });
+    Route::get('/trigger/{data}', function ($data) {
+        event(new TestWebsocketEvent($data));
+        return sprintf('傳送資料為%s',$data);
+    });
     # Room
     Route::group(['middleware' => 'auth', 'prefix' => 'room', 'as' => 'room.'], function () {
         Route::get('/', [RoomController::class, 'index'])->name('index');
