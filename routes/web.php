@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('welcome');
     });
     Route::get('/trigger/{data}', function ($data) {
-        event(new TestWebsocketEvent($data));
+        event(new \App\Events\TestWebsocketEvent($data));
         return sprintf('傳送資料為%s',$data);
     });
     # Room
